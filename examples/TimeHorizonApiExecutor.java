@@ -21,10 +21,10 @@ public class RestApiExecutor {
 	 */
 	public static void main(String[] args) {
 
-	  String urlString = "https://sandbox.advisorsoftware.com:443/v1/mcs";
-	  String input = "{\r\n\t\"startDate\": \"2015-01-01\",\r\n\t\"timePeriod\": 10,\r\n\t\"simulations\": 1000,"
-				+ "\r\n\t\"rebalFrequency\": \"quarterly\",\r\n\t\"taxStatus\": \"tax\",\r\n\t\"taxRates\": {\r\n\t\t\"incomeRate\": 1,\r\n\t\t\"ltcgRate\": 1\r\n\t},\r\n\t\"portfolios\": [{\r\n\t\t\"name\": \"Current Portfolio\",\r\n\t\t\"cashBalance\": 10000,\r\n\t\t\"holdings\": [{\r\n\t\t\t\"lotId\": \"Lot-1\",\r\n\t\t\t\"symbol\": \"IBM\",\r\n\t\t\t\"purchaseDate\": \"2014-12-01\",\r\n\t\t\t\"quantity\": 100,\r\n\t\t\t\"currentValue\": 500,\r\n\t\t\t\"costBasis\": 1200\r\n\t\t}],\r\n\t\t\"incomes\": [{\r\n\t\t\t\"name\": \"Income1\",\r\n\t\t\t\"startMonth\": 1,\r\n\t\t\t\"startYear\": 2015,\r\n\t\t\t\"endMonth\": 12,\r\n\t\t\t\"endYear\": 2025,\r\n\t\t\t\"amount\": 1000,\r\n\t\t\t\"inflationSensitivity\": \"false\",\r\n\t\t\t\"frequency\": \"annual\"\r\n\t\t}],\r\n\t\t\"goals\": [{\r\n\t\t\t\"name\": \"Retirement\",\r\n\t\t\t\"startMonth\": 1,\r\n\t\t\t\"startYear\": 2020,\r\n\t\t\t\"endMonth\": 12,\r\n\t\t\t\"endYear\": 2025,\r\n\t\t\t\"amount\": 1000,\r\n\t\t\t\"inflationSensitivity\": \"false\",\r\n\t\t\t\"frequency\": \"annual\"\r\n\t\t}]\r\n\t}]\r\n}";
+		String urlString = "https://sandbox.advisorsoftware.com/v1/goal_solver/time_horizon";
+		String input = "{\r\n\t\"accountValue\": \"5000\",\r\n\t\"accountReturn\": \"6\",\r\n\t\"goals\": [{\r\n\t\t\"goalName\": \"Rainy Day Fund\",\r\n\t\t\"goalAmount\": \"25000\",\r\n\t\t\"contributionAmount\": \"1000\",\r\n\t\t\"contributionFrequency\": \"Annual\",\r\n\t\t\"contributionStartYear\": \"2016\",\r\n\t\t\"contributionEndYear\": \"2025\"\r\n\t}]\r\n}";
 
+		try {
 			URL url = new URL(urlString);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setDoOutput(true);
@@ -39,7 +39,7 @@ public class RestApiExecutor {
 
 			if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
 				throw new RuntimeException("Failed : HTTP error code : "
-					+ conn.getResponseCode());
+						+ conn.getResponseCode());
 			}
 
 			BufferedReader br = new BufferedReader(new InputStreamReader(
@@ -53,15 +53,15 @@ public class RestApiExecutor {
 
 			conn.disconnect();
 
-		  } catch (MalformedURLException e) {
+		} catch (MalformedURLException e) {
 
 			e.printStackTrace();
 
-		  } catch (IOException e) {
+		} catch (IOException e) {
 
 			e.printStackTrace();
 
-		 }
+		}
 	}
 
 }
